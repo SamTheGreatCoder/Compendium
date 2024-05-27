@@ -1,4 +1,27 @@
-## Portainer/Agent in Compose
+# Portainer/Agent in Compose
+
+## My version:
+``` yaml
+version: '3.9'
+name: portainer
+services:
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    restart: unless-stopped
+    ports:
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/pve/portainer-ce/data:/data
+    networks:
+      - backend
+networks:
+  backend:
+    external: true
+```
+
+## Based on:
 https://www.herlitz.io/2024/03/deploy-portainer-and-portainer-agent-using-docker-compose/
 ``` yaml
 version: '3.9'
