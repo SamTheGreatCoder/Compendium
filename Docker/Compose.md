@@ -13,6 +13,20 @@ services:
             - test-wp-network
 networks:
   test-wp-network:
+    external: true
+```
+## Original: **THIS IS DEPRECATED**
+``` yaml
+version: "3.9"
+services:
+    result:
+        image: result
+        ports:
+            - "8080:80"
+        networks:
+            - test-wp-network
+networks:
+  test-wp-network:
     external:
       name: "test-wp-network"
 ```
