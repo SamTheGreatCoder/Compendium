@@ -9,3 +9,5 @@ Tags:
         - Nginx Proxy Manager
 - Markdown
     - Formatting
+- Proxmox
+    - LXC

@@ -29,3 +29,13 @@ new line
     ``` markdown
     insert code here
     ```
+## Bold:
+``` markdown
+**bold text here**
+```
+**bold text here**
+## Italics:
+``` markdown
+*italics text here*
+```
+*italics text here*
