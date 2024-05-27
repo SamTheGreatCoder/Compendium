@@ -2,7 +2,7 @@
 ## Connect container to network:
 "you need to declare networks before you use it in services."\
 https://stackoverflow.com/a/74274260
-```
+``` yaml
 version: "3.9"
 services:
     result:
@@ -18,7 +18,7 @@ networks:
 ```
 ## Portainer/Agent in Compose
 https://www.herlitz.io/2024/03/deploy-portainer-and-portainer-agent-using-docker-compose/
-```
+``` yaml
 version: '3.9'
 name: portainer
 services:
