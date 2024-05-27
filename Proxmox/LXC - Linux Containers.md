@@ -55,16 +55,22 @@ rootfs: local-zfs:subvol-102-disk-0,size=4G
 ```
 tags: proxmox-helper-scripts
 ```
-## Device Passthrough
-*THIS HAS ONLY BEEN TESTED WITH INTEL iGPU IN PRIVILEGED CONTAINERS*
+## GPU/Device Passthrough
+*This only works on **PRIVILEGED** LXC Containers*\
+https://herold.space/proxmox-lxc-intel-quick-sync-for-plex/
 ```
-lxc.cgroup2.devices.allow: a
-lxc.cap.drop:
-lxc.cgroup2.devices.allow: c 188:* rwm
-lxc.cgroup2.devices.allow: c 189:* rwm
+# /dev/dri/card0 is the NVIDIA GeForce MX150-0
 lxc.cgroup2.devices.allow: c 226:0 rwm
+# /dev/dri/card1 is the Intel UHD 620 integrated on i7-8550u
+lxc.cgroup2.devices.allow: c 226:1 rwm
+# /dev/dri/renderD128 is the NVIDIA GeForce MX150-0
 lxc.cgroup2.devices.allow: c 226:128 rwm
+# /dev/dri/renderD129 is the Intel UHD 620 integrated on i7-8550u
+lxc.cgroup2.devices.allow: c 226:129 rwm
+# this is needed for /dev/fb0
 lxc.cgroup2.devices.allow: c 29:0 rwm
+# mounts all card/render devices
 lxc.mount.entry: /dev/dri dev/dri none bind,optional,create=dir
+# I forget what this is for, maybe not even needed in some instances
 lxc.mount.entry: /dev/fb0 dev/fb0 none bind,optional,create=file
 ```
