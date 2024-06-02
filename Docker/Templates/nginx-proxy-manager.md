@@ -19,7 +19,6 @@ services:
       # Uncomment this if you want to change the location of
       # the SQLite DB file within the container
       # DB_SQLITE_FILE: "/data/database.sqlite"
-
       # Uncomment this if IPv6 is not enabled on your host
       # DISABLE_IPV6: 'true'
     volumes:
@@ -28,7 +27,7 @@ services:
     networks:
       - frontend
       - backend
-# Personal addition
+# Personal addition for homelab
 networks:
   frontend:
     external:

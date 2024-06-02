@@ -1,6 +1,7 @@
 # Portainer/Agent in Compose
 
 ## My version:
+NOTE: I don't intend to access Portainer over HTTP so I chose to remove that port access. Backend network is for homelab.
 ``` yaml
 version: '3.9'
 name: portainer
@@ -13,7 +14,8 @@ services:
       - "9443:9443"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /opt/pve/portainer-ce/data:/data
+      - /var/lib/docker/volumes:/var/lib/docker/volumes
+      - /opt/pve/portainer-ce/config:/data
     networks:
       - backend
 networks:
