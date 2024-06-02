@@ -7,8 +7,11 @@ Tags:
 - Docker Compose
     - Network
     - Templates
+        - Eclipse Mosquitto MQTT Broker
         - Nginx Proxy Manager
         - Portainer/Agent
+- Eclipse Mosquitto MQTT Broker
+    - Setup
 - Markdown
     - Formatting
 - Nginx Proxy Manager

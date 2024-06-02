@@ -22,7 +22,6 @@ networks:
   backend:
     external: true
 ```
-
 ## Based on:
 https://www.herlitz.io/2024/03/deploy-portainer-and-portainer-agent-using-docker-compose/
 ``` yaml

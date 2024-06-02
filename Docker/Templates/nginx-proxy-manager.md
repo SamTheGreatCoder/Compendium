@@ -1,4 +1,4 @@
-## Nginx Proxy Manager
+# Nginx Proxy Manager
 https://nginxproxymanager.com/guide/#quick-setup
 ``` yaml
 version: '3.8'
