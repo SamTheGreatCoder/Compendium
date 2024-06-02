@@ -25,10 +25,22 @@ new line
 - Main point
     - Sub point
         - Another sub point
+## Numbered list:
+``` markdown
+1. This is a numbered list
+2. Helpful for listing orders
+    - Subpoints work too!
+3. This way everything stays organized
+```
+1. This is a numbered list
+2. Helpful for listing orders
+    - Subpoints work too!
+3. This way everything stays organized
 ## Codeblock:
     ``` markdown
-    insert code here
+    insert code here or even ```inline```
     ```
+insert code here or even ```inline```
 ## Bold:
 ``` markdown
 **bold text here**

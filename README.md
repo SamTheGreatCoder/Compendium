@@ -11,5 +11,9 @@ Tags:
         - Portainer/Agent
 - Markdown
     - Formatting
+- Nginx Proxy Manager
+    - Setup
+    - Proxy hosts
+    - SSL Certificates
 - Proxmox
     - LXC
