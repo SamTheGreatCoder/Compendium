@@ -7,7 +7,9 @@ Tags:
 - Docker Compose
     - Network
     - Templates
+        - Authentik
         - Eclipse Mosquitto MQTT Broker
+        - Home Assistant
         - Nginx Proxy Manager
         - Portainer/Agent
 - Eclipse Mosquitto MQTT Broker
