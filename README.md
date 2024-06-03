@@ -9,6 +9,7 @@ Tags:
     - Templates
         - Authentik
         - Eclipse Mosquitto MQTT Broker
+        - go2rtc
         - Home Assistant
         - Nginx Proxy Manager
         - Portainer/Agent
