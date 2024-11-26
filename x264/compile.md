@@ -19,4 +19,11 @@ Configure x264 makefiles based on configuration options we want:
 
 ```--extra-ldflags``` is for the linker, responsible for putting it all together once everything is compiled. We once again tell it that we are doing full level 3 lto, targetting the microarchitecture the compiler is running on, and as stated before, to compile the application library statically.
 
+```
+make -j${nproc}
+make install
+```
+
+And you're done (future extension note, rather then ```make install```, maybe put it into a package file first for better organization and better cleanup of files, should uninstall be a necesity down the line?)
+
 ## NOTE: At the moment I do not have any performance metrics to prove that compiling x264 with micro/architecture specific optimizations will improve or hinder x264's performance, over "generic" target compiles. I also have not done any tests to ensure these optimizations do not impact the conformance of the encoder. As with anything you find on the internet, follow at your own risk, and do your own research (this would show that these sort of optimizations provide decent speed-ups with the AOM-AV1 encoder, in other environments/situations.)
