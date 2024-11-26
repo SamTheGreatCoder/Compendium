@@ -13,6 +13,7 @@ Tags:
         - Home Assistant
         - Nginx Proxy Manager
         - Portainer/Agent
+        - Ring-MQTT
 - Eclipse Mosquitto MQTT Broker
     - Setup
 - Markdown
@@ -23,3 +24,5 @@ Tags:
     - SSL Certificates
 - Proxmox
     - LXC
+- Ring-MQTT
+    - Setup
