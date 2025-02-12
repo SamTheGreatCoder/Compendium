@@ -1,6 +1,7 @@
 # Alpine Linux on HP MediaSmart Server
 
-## Graveyard notice: 
+## Graveyard notice
+
 After installing the additional packages and removing the extra firmware files, there were  only a couple MB remaining on the internal storage, meaning that upgrades to anything would require a rebuild of the entire configuration.
 
 After consideration, this isn't worth the effort to maintain, even on an infrequent update cycle, and deleting firmware files as a means of fitting it on the storage, for a system that I consider critical, doesn't make sense. Something as simple as trying to update a single package would fill up the remainder of the storage and cause no free space errors.
@@ -18,6 +19,7 @@ I ended up selecting Alpine Linux as it meets all of my desired criteria. Samba,
 The specific flow to fit Alpine on the 256MB storage is to install Alpine on a larger flash drive first, (I used a 2GB drive), install all of the desired packages (samba, NFS, SSH, etc) and then install ZFS. I don't remember the reason but installing ZFS before clearing the extra firmware was needed to avoid broken file references.
 
 These are the additional packages I installed:
+
 ```
 amd-ucode
 btop
