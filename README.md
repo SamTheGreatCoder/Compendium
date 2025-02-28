@@ -1,5 +1,14 @@
-# Codebits
-Just various bits of code for various programs/systems so I always have a reference
+# Compendium
+My ever growing library and collection of technical documentation (both self-written and acquired material)
+
+Table of Contents:
+- Applications (documentation/information about various applications, standalone/container/turnkey/etc.)
+- Graveyard (documents on items I no longer maintain/support, moved here for archival purposes, should they be resurrected)
+- Languages (everything I've collected about a certain computer language)
+- Media (for my side quests of exploring compression through various media codecs)
+- Systems (higher level then Applications, working at the OS layer)
+
+## Old README to migrate:
 
 Tags:
 - Authentik
