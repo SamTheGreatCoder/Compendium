@@ -3,6 +3,7 @@ My ever growing library and collection of technical documentation (both self-wri
 
 Table of Contents:
 - Applications (documentation/information about various applications, standalone/container/turnkey/etc.)
+- Builds (higher level then Systems usually, working at the physical hardware layer, likely also involving OS and Application layer as too)
 - Graveyard (documents on items I no longer maintain/support, moved here for archival purposes, should they be resurrected)
 - Languages (everything I've collected about a certain computer language)
 - Media (for my side quests of exploring compression through various media codecs)
