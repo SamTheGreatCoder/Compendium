@@ -6971,6 +6971,12 @@ You will need to update any of the configured sources based on whatever the quer
 
 I also will not be attaching how to connect your InfluxDB to Grafana. I could not find a way to express it as a configuration file, and there are plenty of guides available anyway.
 
+While not related to InfluxDB, Telegraf, or Grafana, here is how I configured a VNC server for this system so I could access everything while it operates headless.
+
+1. Install `tigervnc`, the `lxde` DE, and any extra packages, (`btop`, `lxterminal`, to name a couple)
+2. Follow [Running vncserver for virtual (headless) sessions](https://wiki.archlinux.org/title/TigerVNC#Running_vncserver_for_virtual_(headless)_sessions) from the Arch Linux wiki
+3. [This](https://github.com/TigerVNC/tigervnc/issues/1096) systemd user service was able to work for me, to let it autostart on system re/boot.
+
 Here are a couple other links I found helpful to puruse through when trying to become more familar with this.
 
 [Linuxserver.io](https://www.linuxserver.io/blog/2017-11-25-how-to-monitor-your-server-using-grafana-influxdb-and-telegraf) has a good guide for setting up not InfluxDB, Grafana and Telegraf.
