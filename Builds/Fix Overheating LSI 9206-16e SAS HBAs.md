@@ -16,7 +16,7 @@ My dad a couple years back acquired two LSI 9206-16e HBA cards, seemingly from a
 
 According to [LSI's user guide](https://docs.broadcom.com/doc/12353328), under section 5.6, "Thermal and Atmospheric Limits", the minimum airflow listed is "100 linear feet per minute at 35 °C (95 °F) bay inlet temperature". While the house never reaches those temperatures, with this card being used in a traditional ATX computer case, the effective intake temperatures may be much higher. But also, I am quite sure that both fans combined are not meeting the 100 linear feet per minute airflow rating. It was at this point my dad lost interest in utilizing these cards, and ended up placing them in a drawer.
 
-(insert photo)
+![Original state of the LSI card. You can see the hot glue around the border of the fan, and the self tapping screws pushing the fins apart.](https://github.com/user-attachments/assets/495bb8a3-3ca7-45c8-a95b-aba555550dce)
 
 ## My turn
 
@@ -24,7 +24,9 @@ Really the only information I had going into this was that when measuring the ba
 
 My first thought was to verify thermal dissapation, so I connected the card to a system, and let it sit in the BIOS while I waited for the card to warm up. Within 2 minutes the PCB itself became almost too hot to touch with a bare finger, meanwhile the heatsinks remained cool to rest a hand on for a seemingly infinite amount of time. Mind you, both fans mentioned earlier were spinning at full speed from cold boot. From this, I immediately suspected the thermal paste.
 
-(insert photo)
+![View of the bare PLX PCIe switch chip on the LSI 9206-16e PCB](https://github.com/user-attachments/assets/f5135f0d-a3e7-4828-8ead-6752409559b7)
+
+![View of the bare LSI SAS2308 chip on the LSI 9206-16e PCB. This is the right side chip, but the left side looks the same.](https://github.com/user-attachments/assets/4d9ef29f-a77b-4bb6-a535-6c2f0e5128a5)
 
 ### Side note
 
@@ -32,11 +34,9 @@ At this point, I was unware that `lsiutil` could read the temperature for SAS230
 
 Given the paste being fully dried up, it makes sense that thermal transfer efficiency was next to nothing. While replacing the paste with quite possibly anything would have resolved the issue, I wanted to go all out for the sake of curiosity. At the time of writing, I have had good results with PTM7950 (plenty but far too many to list here frankly), but only with higher TDP computer systems. Stepping down to something more compact I thought would be an interesting case to investigate.
 
-(insert photo)
+![LSI 9206-16e with 1cm by 1cm application of PTM7950 on each chip.](https://github.com/user-attachments/assets/3a203d24-3410-4f73-9b62-69791703423d)
 
 Both the PLX and SAS2308 controller measure out to about 12mm on both sides, on the highest surface. I ended up cutting out a 10mm*10mm piece of PTM7950 since it would be a neater cut into my large sheet (sourced from Linus Tech Tips). It will spread out after enough heat cycles and should be effective. Probably? Ultimately it is still better then what was on there before.
-
-(insert photo)
 
 ### Test time (without fans)
 
@@ -100,7 +100,7 @@ It then occured to me that the card is going to be used in an ATX computer case,
 
 One 3D print later and the fan is ready to mount.
 
-(insert photo)
+![LSI 9206-16e HBA mounted in a running system with the 3D printed 120mm fan mount.](https://github.com/user-attachments/assets/46d85f60-62b5-4785-989a-216adad1e1a6)
 
 While the photo shows the fan blowing air upward onto the card, that was not the first test I did for the card. The case for this test system (Antec 300) does not have a bottom PSU intake. Due to this, the power supply must pull air from inside the case like every other component. I thought that I could orient the fan for the HBA such that it pulls air from above, blow it over the HBA, and then down into the PSU to exhaust.
 
@@ -112,7 +112,7 @@ The idea behind the write test was to write to all 16 hard drives simultaneously
 
 There ended up being a CPU bottleneck for the first portion of the test, but since hard drives typically read faster then write, this was meant to be means of "testing the waters".
 
-(insert image)
+![Duration of the hard drive write test in Grafana.](https://github.com/user-attachments/assets/29f0fe18-55bc-4055-8501-4195b2a78c4f)
 
 The graphs do make it difficult to discern, but the HBA fan did ramp to a highest of ~1100rpm, while overall the HBA temperature remained largely unchanged. The first controller essentially held steady at 50°C, while the second started around ~58°C, peaking at the highest of 61°C, and then cooling down again by the end of all the drives writing.
 
@@ -128,7 +128,7 @@ I kept the block size at 100M to minimize the amount of idle I/O time, and told 
 
 I gave up after about 18 hours since one of the Seagate 2TB drives began to mark 48 sectors as pending reallocation (how funny because it took multiple read passes for it to spontaneously decide that), and the temperature of the controller card was again, unchanged, with the fan ramping up only slightly, likely a result of the extra heat being dissipated from the hard drives.
 
-(insert image)
+![Duration of the hard drive read test in Grafana.](https://github.com/user-attachments/assets/e5909e51-db81-42eb-9679-6b4a9eeca500)
 
 So no more tests right?
 
@@ -142,7 +142,7 @@ Since there seems to be no significant increase in thermal dissipation requireme
 
 The power supply does sit slightly raised up from the floor of the case, such that the fan should still be able to pull in some air. While not shown in the graph, power supply temperatures were checked in regular intervals, and as expected, there were no concerns.
 
-(insert image)
+![Duration of the test of the fan now pushing area into the HBA, in Grafana.](https://github.com/user-attachments/assets/d21148ea-9a93-41b6-9a84-301fd072c7fe)
 
 Wait that is better, a LOT better. 48°C at the lowest on the second controller? (and a lowest of 41°C for the first controller) With the fan was only between ~750-800rpm? Quite impressive. Could it be lowered extra though?
 
@@ -783,13 +783,15 @@ pcilib: sysfs_read_vpd: read failed: No such device
 
 Since using this card adds roughly an extra 30 watts of power consumption, why not a couple extra? While at it, why not also up the noise profile? All of the current tests have been performed with a Corsair AF120 led series quiet edition fan. Rated at up to 1500rpm and 25dBA, this is a quite respectable fan, still delivering adequate air flow when used appropiately, and staying out of our ears doing so. Helpful in a homelab setup where the system's accoustic profile is something to be noticed by anyone. But why not throw all considerations out? Who cares how loud the system gets if the card gets to stay as cold as possible? Enter the Cooler Master JetFlo 120mm fan.
 
-(insert image)
+![Same 3D printed mount as before, but this time with a Cooler Master JetFlo fan on it. With my luck, the included screws are too short, and so I had to ziptie the fan to the mount. Seems to be holding pretty steady though.](https://github.com/user-attachments/assets/5b1c16ec-52df-4f02-b228-a37dcaac89df)
+
+![Surely the ziptie will not interfere with the fan](https://github.com/user-attachments/assets/6e071a55-b4ba-4fb1-96c0-126cf53d0974)
 
 I will not bore you with the details of this fan. To keep things brief, this fan is known for delievering high air flow (~95 CFM), ramping to a quick-for-a-120mm-fan 2000rpm, all with a rated noise level of 36 dBA.
 
 Now before I talk about temperatures, why did I chose a JetFlo (or an air flow focused fan for that matter), compared to a static pressure optimized fan? First off, the fin density of the heatsink is quite low compared to most desktop tower coolers and radiators, so there should be less restriction for airflow. Second, the card is not 120mm tall, so only half the fan aims directly at the heatsink fins. If curiousity does get the best of me in the future to try a static pressure optimized fan, I will be sure to update back.
 
-(insert image)
+![Grafana dashboard view of running the JetFlo at full speed](https://github.com/user-attachments/assets/5f8fc5ff-904c-4906-9504-820dea6f2ca5)
 
 36°C on controller 1, 40°C on controller 2. That is impressive. Power consumption did increase by 3 watts however, which is understandable. My understanding is that PTM7950 does work most efficiently starting at 50°C, so it's possible that anything lower then this is unlikely. Perhaps regular paste would have behaved differently? Possibly not though if the paste cannot transfer sink heat away as fast.
 
@@ -799,11 +801,11 @@ Additionally, I did notice the fan spinning 300rpm higher then it's rated. It's 
 
 As a last test, I unplugged the fan, leaving only the CPU fan, top exhaust fan, and front intake fans plugged in, on regular CPU temperature fan curves to see if that could keep the temperatures at bay. It did not. It took less than 5 minutes for the card to reach 101°C on the second controller. Interestingly the first controller only reached 70°C but at the rate of progression I imagine it would have been only a matter of time. Plugging the fan back in though quickly cooled down the HBA back into reasonable temperature ranges within one minute. Safe to say the PTM7950 is doing its job.
 
-(insert image)
+![Grafana dashboard view of the LSI 9206-16e overheating in just less then five minutes. Defintely needs airflow.](https://github.com/user-attachments/assets/71e2e88c-5a7f-44af-a534-70240523b070)
 
 ### So what now? (conclusion, closing notes, extra specifics for the detail oriented folks)
 
-Well at minimum, there are now 2 working LSI 9216-16e HBA cards ready to be used in a system. That is it really. I already know PTM7950 works and it would not appropiate to advocate for it purely from this, since I never tested with regular paste. I now know that the SAS2308 based cards need a style of airflow to prevent them from essentially melting, and had an excuse to shirk other duties to experiment with this. Worth it I would say.
+Well at minimum, there are now 2 working LSI 9206-16e HBA cards ready to be used in a system. That is it really. I already know PTM7950 works and it would not appropiate to advocate for it purely from this, since I never tested with regular paste. I now know that the SAS2308 based cards need a style of airflow to prevent them from essentially melting, and had an excuse to shirk other duties to experiment with this. Worth it I would say.
 
 #### How did I automatically control the fan speed for the HBA?
 
@@ -1812,8 +1814,8 @@ services:
               "options": {
                 "mode": "exclude",
                 "names": [
-                  "LSI 9216-16e P2",
-                  "LSI 9216-16e P1"
+                  "LSI 9206-16e P2",
+                  "LSI 9206-16e P1"
                 ],
                 "prefix": "All except:",
                 "readOnly": true
@@ -2776,7 +2778,7 @@ services:
           ]
         },
         {
-          "alias": "LSI 9216-16e P1",
+          "alias": "LSI 9206-16e P1",
           "datasource": {
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
@@ -2818,7 +2820,7 @@ services:
           "tags": []
         },
         {
-          "alias": "LSI 9216-16e P2",
+          "alias": "LSI 9206-16e P2",
           "datasource": {
             "type": "influxdb",
             "uid": "${DS_INFLUXDB}"
@@ -7012,7 +7014,7 @@ There are plenty other links and guides out there.
 
 **Second HBA fan**: Cooler Master JetFlo 120mm, white LED, 4-pin
 
-**HBA**: LSI 9216-16e, Dell P/N `0TFJRW`
+**HBA**: LSI 9206-16e, Dell P/N `0TFJRW`
 
 For cables, any **SFF-8644 to SFF-8088** is sufficient, and then since my test hard drive set physically extended into a second case, any **SFF-8088 to SFF-8087 PCI slot adapter** (and of course SFF-8087 to SATA breakout cables) will also be sufficient.
 
