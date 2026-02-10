@@ -220,7 +220,7 @@ chmod +x /etc/init.d/caddy
 /etc/init.d/caddy start
 ```
 
-## Firewall rules
+## Firewall rules (at least for IPv6)
 
 1. Change the ports that `uhttpd` is listening on, for Luci, and optionally remove the HTTP listener.
 
@@ -245,3 +245,65 @@ config uhttpd 'main'
 
 Name the rule, (and if you're using HTTP/3, UDP may need to be enabled for QUIC, dependent on what is behind Caddy, otherwise only TCP will suffice), set `Destination zone` to `Device (input)`, and `Destination port` to `80`. (This is our HTTP rule, but there is no need for worry since you'll use HTTPS redirect with Caddy. *Right*?) Once saved, clone the rule, changing the `Destination port` to `443`.
 
+## Crowdsec Integration
+
+1. Follow OpenWrt's [documentation](https://openwrt.org/docs/guide-user/services/crowdsec). Seriously.
+
+2. Then go familarize yourself with OPNsense's [documentation](https://docs.opnsense.org/manual/how-tos/caddy.html#crowdsec-integration).
+
+```bash
+cscli collections install crowdsecurity/caddy
+nano /etc/crowdsec/acquis.yaml
+```
+
+```yaml
+#filenames:
+#  - /var/log/nginx/*.log
+#  - ./tests/nginx/nginx.log
+#labels:
+#  type: nginx
+#---
+#filenames:
+# - /var/log/auth.log
+# - /var/log/syslog
+#labels:
+#  type: syslog
+#---
+#filenames:
+# - /var/log/httpd-access.log
+# - /var/log/httpd-error.log
+#labels:
+#  type: apache2
+---
+filenames:
+  - /var/log/caddy/access/*.log
+force_inotify: true
+poll_without_inotify: true
+labels:
+  type: caddy
+```
+
+```bash
+service crowdsec restart
+cscli metrics
+```
+
+```
+╭───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ Acquisition Metrics                                                                                                                                           │
+├─────────────────────────────────────────────────────────────────────┬────────────┬──────────────┬────────────────┬────────────────────────┬───────────────────┤
+│ Source                                                              │ Lines read │ Lines parsed │ Lines unparsed │ Lines poured to bucket │ Lines whitelisted │
+├─────────────────────────────────────────────────────────────────────┼────────────┼──────────────┼────────────────┼────────────────────────┼───────────────────┤
+│ file:/var/log/caddy/access/files-mysubdomain.log                    │ 8.10k      │ 8.10k        │ -              │ 444                    │ -                 │
+╰─────────────────────────────────────────────────────────────────────┴────────────┴──────────────┴────────────────┴────────────────────────┴───────────────────╯
+╭───────────────────────────────────────────────────────────────────╮
+│ Parser Metrics                                                    │
+├────────────────────────────────────┬─────────┬─────────┬──────────┤
+│ Parsers                            │ Hits    │ Parsed  │ Unparsed │
+├────────────────────────────────────┼─────────┼─────────┼──────────┤
+│ crowdsecurity/caddy-logs           │ 8.10k   │ 8.10k   │ -        │
+╰────────────────────────────────────┴─────────┴─────────┴──────────╯
+```
+
+> [!WARNING]
+> I am pretty sure that you still need to feed `crowdsec` logs from the proxied applications. That is your responsibility to figure out.
